@@ -1,0 +1,40 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>JO Connect Hub</title><meta name="theme-color" content="#1f6f5c"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#eef1ee;--sf:#fff;--ink:#17211f;--mut:#5d6b67;--ac:#1f6f5c;--af:#fff;--bd:#d5ddd9;--dg:#b3402f}
+[data-t=dark]{--bg:#0f1514;--sf:#172120;--ink:#e6efec;--mut:#8fa29c;--ac:#5cc9a7;--af:#0f1514;--bd:#26332f;--dg:#ef8a78}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
+main{max-width:640px;margin:auto;padding:16px 16px 0;padding-top:max(16px,env(safe-area-inset-top))}
+h1{font-size:1.7rem;margin:.2em 0 .6em;letter-spacing:-.02em}h2{font-size:1.05rem;margin:1.2em 0 .5em}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:0 0 10px}.mut{color:var(--mut);font-size:.9rem}.err{color:var(--dg);min-height:1.2em;margin:.4em 0 0}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin:4px 0 8px}
+input[type=checkbox]{width:auto;margin:0 6px 0 0}label{display:block;font-size:.9rem;color:var(--mut)}textarea{resize:vertical}
+.b{font:inherit;font-weight:600;color:var(--ink);background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:9px 14px;cursor:pointer}
+.b.p{background:var(--ac);color:var(--af);border-color:var(--ac)}.b.d{color:var(--dg)}.b:disabled{opacity:.6}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}.row input{flex:1;min-width:0;margin:0}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stats .card{display:flex;flex-direction:column}.stats strong{font-size:2rem;line-height:1.1}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tile{font:inherit;text-align:left;color:var(--ink);background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:14px;cursor:pointer}.tile span{display:block;font-size:1.5rem}
+.pw{font-family:ui-monospace,Menlo,monospace;word-break:break-all;margin:6px 0}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--sf);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;font:inherit;font-size:.72rem;color:var(--mut);background:none;border:0;padding:9px 0;cursor:pointer}nav button span{display:block;font-size:1.25rem}nav button.on{color:var(--ac);font-weight:700}
+.pad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.k{font:inherit;font-size:1.3rem;font-weight:600;color:var(--ink);background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:15px 0;cursor:pointer}.k.op{background:var(--bg);color:var(--ac)}.k.eq{grid-column:span 3;background:var(--ac);color:var(--af);border-color:var(--ac)}
+.cx{min-height:1.6em;font-size:1.4rem;word-break:break-all;text-align:right}.cr{min-height:1.4em;text-align:right;color:var(--ac);font-size:1.15rem;font-weight:700}
+.hi{display:flex;justify-content:space-between;gap:8px;padding:9px 12px;border-bottom:1px solid var(--bd);cursor:pointer}
+.seg{display:flex;gap:8px;margin-bottom:12px}.seg button{flex:1}.big{font-size:3.2rem;font-weight:700;text-align:center;font-variant-numeric:tabular-nums;margin:18px 0}
+#toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:20px;opacity:0;pointer-events:none;transition:.2s;max-width:90%}#toast.on{opacity:1;transform:translate(-50%,0)}
+dialog{width:min(92vw,460px);color:var(--ink);background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:16px}dialog::backdrop{background:#0008}
+:focus-visible{outline:2px solid var(--ac);outline-offset:2px}[hidden]{display:none!important}
+</style></head><body>
+<main id="app"></main>
+<nav><button data-r="home"><span>🏠</span>Beranda</button><button data-r="vault"><span>🔐</span>Vault</button><button data-r="notes"><span>📝</span>Catatan</button><button data-r="calc"><span>🧮</span>Hitung</button><button data-r="timer"><span>⏱️</span>Timer</button><button data-r="set"><span>⚙️</span>Setelan</button></nav>
+<div id="toast" role="status"></div>
+<dialog id="dlg"><form id="ff"><h2 id="dt">Akun</h2>
+<label>Nama website/aplikasi<input id="fn" required></label><label>Username/email<input id="fu" autocomplete="off"></label>
+<label>Password<input id="fp" type="password" required autocomplete="new-password"></label>
+<div class="row"><button type="button" class="b" id="fs">Tampil</button><button type="button" class="b" id="fg">Buat otomatis</button></div>
+<label>Catatan<textarea id="fc" rows="3"></textarea></label>
+<div class="row"><button class="b p">Simpan</button><button type="button" class="b" id="fx">Batal</button></div></form></dialog>
+<dialog id="gdlg"><h2>Password Generator</h2><input id="go" readonly aria-label="Hasil">
+<label>Panjang: <b id="gv"></b><input id="gn" type="range" min="8" max="40"></label>
+<label><input type="checkbox" id="gU">Huruf besar</label><label><input type="checkbox" id="gL">Huruf kecil</label><label><input type="checkbox" id="gD">Angka</label><label><input type="checkbox" id="gS">Simbol</label>
+<div class="row" style="margin-top:10px"><button class="b p" id="gr">Buat ulang</button><button class="b" id="gc">Salin</button><button class="b" id="gx">Tutup</button></div></dialog>
+<script src="app.js"></script></body></html>
